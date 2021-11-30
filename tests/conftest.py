@@ -38,7 +38,7 @@ def pytest_addoption(parser):
     parser.addoption("--tenant", action="store")
     # input file name
     parser.addoption("--input_sample_filename", action="store",
-                     default="employee_sample_integration_test.parquet")
+                     default="user.parquet")
 
 @pytest.fixture()
 def input_sample_file_name(pytestconfig) -> str:
