@@ -1,0 +1,10 @@
+pytest
+flake8
+autopep8
+azure-identity
+azure-keyvault-secrets
+azure-storage-file-datalake
+azure-synapse
+pyodbc
+pandas
+pyarrow
