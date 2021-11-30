@@ -61,8 +61,8 @@ def source_to_raw_tests(azure_credential,
 
     print("STARTING SOURCE TO RAW...\n")
     # Arrange
-    target_path = "/integrationtest_employees/raw/"
-    table_raw = "integrationtest_employees"
+    target_path = "/integrationtest_users/raw/"
+    table_raw = "integrationtest_users"
     target_table = json.dumps(
         {"name": table_raw, "overwrite": "false", "path": target_path, "partition_by": ""})
 
@@ -76,9 +76,9 @@ def source_to_raw_tests(azure_credential,
     # Trigger the Master Pipeline for Landing to Raw Zone
     masterpipeline_raw_params = {
         "basePath": base_path,
-        "filePath": "employee_*.parquet",
+        "filePath": "user_*.parquet",
         "targetTable": target_table,
-        "badDataTable": "bad_employees",
+        "badDataTable": "bad_users",
         "containerName": container_name,
         "archivePath": "archive",
         "storageAccountName": storage_account_name,
@@ -103,7 +103,7 @@ def source_to_raw_tests(azure_credential,
 
     # Assert
     print(f"Number of Rows Fetched : { num_of_rows }\n")
-    assert num_of_rows == 10
+    assert num_of_rows >=1
 
 
 def raw_to_processed_tests(azure_credential,
@@ -113,8 +113,8 @@ def raw_to_processed_tests(azure_credential,
 
     print("STARTING PROCESSED TO processed TEST...\n")
 
-    table_raw = "integrationtest_employees"
-    table_processed = "processed_integrationtest_employee"
+    table_raw = "integrationtest_users"
+    table_processed = "processed_integrationtest_user"
 
     # Trigger the Master Pipeline for Processed to processed Zone
     masterpipeline_processed_params = {
@@ -143,4 +143,4 @@ def raw_to_processed_tests(azure_credential,
         "SELECT COUNT(*) AS COUNT FROM [dbo].[{0}]".format(table_processed))
     row = cursor.fetchone()
     assert row is not None
-    assert int(row.COUNT) == 10
+    assert int(row.COUNT) >=1
